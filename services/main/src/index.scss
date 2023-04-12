@@ -1,0 +1,28 @@
+.nav-active {
+  border-bottom: 1px solid #000;
+  background: yellow;
+}
+
+.nav {
+  width: 100vw;
+  display: flex;
+  border-bottom: 1px solid #9f9f9f;
+  & > * {
+    padding: 0.5rem 1rem;
+  }
+}
+body {
+  justify-content: start;
+  flex-direction: column;
+}
+
+.nextapp {
+  background-image: url("https://thumbs.gfycat.com/DesertedDazzlingBudgie-size_restricted.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  & iframe {
+    background: transparent;
+    height: calc(100vh - 80px);
+    width: 100vw;
+  }
+}

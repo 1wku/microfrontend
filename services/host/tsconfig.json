@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "es2017", // Specify ECMAScript target version: 'es3' (default), 'es5', 'es2015', 'es2016', 'es2017','es2018' or 'esnext'.
+    "module": "commonjs", // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'.
+    "lib": [
+      "esnext",
+      "dom"
+    ], // Specify library files to be included in the compilation.
+    "strict": true, // enable all strict type-checking options.
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
+    "noUnusedLocals": false, // Report errors on unused locals.
+    "noUnusedParameters": false, // Report errors on unused parameters.
+    "noImplicitReturns": true, // Report error when not all code paths in function return a value.
+    "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement.
+    "moduleResolution": "node", // Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6).
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "src/*": [
+        "./src/*"
+      ]
+    }, // A series of entries which re-map imports to lookup locations relative to the 'baseUrl'.
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
+    "esModuleInterop": true, // Emit '__importStar' and '__importDefault' helpers for runtime babel ecosystem compatibility and enable '--allowSyntheticDefaultImports' for typesystem compatibility.
+    "resolveJsonModule": true, // Include modules imported with '.json' extension.
+    "declaration": true,
+    "emitDeclarationOnly": true, // Only emit ‘.d.ts’ declaration files.
+    "experimentalDecorators": true, // Enables experimental support for ES7 decorators.
+    "emitDecoratorMetadata": true, // Enables experimental support for emitting type metadata for decorators.
+    "sourceMap": true, // Generates corresponding '.map' file.
+    "jsx": "preserve" // Specify JSX code generation: 'preserve', 'react-native', or 'react'.
+    ,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
