@@ -1,4 +1,3 @@
 packages: 
-  - 'services/main'
-  - 'services/nextapp'
-  - 'services/reactapp'
+  - 'services/*'
+  - 'packages/*'
