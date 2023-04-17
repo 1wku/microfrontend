@@ -8,13 +8,14 @@ export type MessageType = {
 export class Host {
 	private apps: string[] = []
 	private _isAuthReady: boolean = false
-	private _iframe: HTMLIFrameElement
+	private _iframes: Record<string, HTMLIFrameElement> = {}
+
 	constructor() {}
 	/**
 	 * @param appName - id do người dùng đặt để phân biệt các app con
 	 */
 	addApp(appName: string, iframe: HTMLIFrameElement) {
-		this._iframe = iframe
+		this._iframes[appName] = iframe
 		window.addEventListener('message', e => {
 			const data = e.data
 			if (
@@ -46,6 +47,7 @@ export class Host {
 				listener(e.data.data)
 			}
 		}
+		// this._iframes[appName].routeHandler = listener
 		window.addEventListener('message', handler)
 
 		return () => window.removeEventListener('message', handler)
@@ -54,13 +56,17 @@ export class Host {
 		if (!this._isAuthReady) {
 			this._isAuthReady = true
 			window.addEventListener('message', e => {
-				const url = new URL(this._iframe.src)
 				if (e.data.event === 'auth') {
 					// NOTE chỗ này có thể tách ra thành một function
 					const { isSuccess, data } = fn()
-					this._iframe.contentWindow.postMessage(
-						{ id: e.data.id, data: { isSuccess, data } },
-						url.origin,
+					Object.keys(this._iframes).map(i =>
+						this._iframes[i].contentWindow.postMessage(
+							{
+								id: e.data.id,
+								data: { isSuccess, data },
+							},
+							i,
+						),
 					)
 				}
 			})

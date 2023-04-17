@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid'
+import router from 'next/router'
 
 export type AuthReturnType = { isSuccess: boolean; data: any }
 
@@ -64,17 +65,23 @@ export class Child {
 	 * @returns
 	 */
 	constructor() {}
+	installNextRouter(router: any) {
+		router.events.on('routeChangeComplete', path =>
+			this.sendMessage('route', path),
+		)
+	}
 	/**
 	 * * Phải được gọi trong **lần đầu tiên** render của app
 	 * * Sử dụng window.parent === window để xác có đang được nhúng vào bên trong của một iframe không
 	 * * Hàm có nhiệm vụ kiểm tra kết nối với cha bằng cách postMessage với nội dung null ra ngoài
 	 * @param appname - Tên của
 	 */
-	init(appName: string) {
+	init() {
 		if (window.parent !== window) {
 			this._isEmbed = true
-			this._origin = document.referrer
-			this._appName = appName
+			this._origin = document.location.ancestorOrigins[0]
+			this.sendMessage('route', window.location.pathname),
+				(this._appName = window.origin)
 			this.sendMessage('init', null, () => {
 				console.info('Connect success full')
 			})
@@ -98,22 +105,14 @@ export class Child {
 	 *    return () => router.events.off("routeChangeStart", handleRouteChange);
 	 * }, []);
 	 */
-	postRouteChange = (path: string) => {
-		if (this._isEmbed) {
-			this.sendMessage('route', path)
-		}
-	}
-
 	auth(fn: (value: AuthReturnType) => void) {
 		this.sendMessage(
 			'auth',
 			null,
 			e => {
-				console.log('oke')
 				fn(e.data)
 			},
 			() => {
-				console.log('child auth')
 				fn({
 					isSuccess: true,
 					data: { role: 'from child' },
