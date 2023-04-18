@@ -16,6 +16,7 @@ export class Host {
 	 */
 	addApp(appName: string, iframe: HTMLIFrameElement) {
 		this._iframes[appName] = iframe
+		this.apps.push(appName)
 		window.addEventListener('message', e => {
 			const data = e.data
 			if (
@@ -23,7 +24,8 @@ export class Host {
 				!this.apps.includes(appName)
 			) {
 				console.info(`App "${appName}" init thành công`)
-				this.apps.push(appName)
+			} else {
+				this.apps.filter(i => i === appName)
 			}
 		})
 	}

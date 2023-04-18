@@ -4,21 +4,17 @@ import { Link } from 'preact-router/match'
 import { Host } from 'micro-iframe/src/models'
 
 import './app.css'
-import { Home } from './pages/home.page'
 import { Reactapp } from './pages/reactapp.page'
 import { Neactapp } from './pages/nextapp.page'
-import { useEffect } from 'preact/hooks'
-import App3 from './pages/app3.page'
-// NOTE
-export const host = new Host()
+import { Home } from './pages/home.page'
 
+//SECTION - init host
+export const host = new Host()
+//NOTE - thêm hàm auth được gọi khi app con yêu cầu
 host.onChildAuth(() => {
 	return { isSuccess: true, data: { role: 'from host' } }
 })
-
-const routeChangeEvent = new CustomEvent('app:route:change', {
-	bubbles: true,
-})
+//!SECTION
 
 const handleRoute = e => {
 	window.dispatchEvent(routeChangeEvent)
@@ -29,6 +25,9 @@ const handleRoute = e => {
 		route('nextapp2' + e.url, true)
 	}
 }
+const routeChangeEvent = new CustomEvent('app:route:change', {
+	bubbles: true,
+})
 
 export function App() {
 	return (
@@ -51,9 +50,6 @@ export function App() {
 				<Link href="/app2/about" activeClassName="nav-active">
 					App 2 about
 				</Link>
-				<Link href="/app3" activeClassName="nav-active">
-					App 3
-				</Link>
 			</nav>
 			<div className="main">
 				<Router onChange={handleRoute}>
@@ -63,11 +59,6 @@ export function App() {
 						component={Neactapp}
 						key="nextapp123"
 						path="/app2/:*"
-					/>
-					<Route
-						component={App3}
-						key="nextapp123"
-						path="/app3/:*"
 					/>
 				</Router>
 			</div>

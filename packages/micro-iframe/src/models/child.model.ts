@@ -3,68 +3,13 @@ import router from 'next/router'
 
 export type AuthReturnType = { isSuccess: boolean; data: any }
 
-/**
- * @example
- * // nextjs
- * // pages/_app.tsx
- * import {Child} from 'micro-frame'
- *
- * export const child = new Child()
- *
- * export default function App({ Component, pageProps }: AppProps) {
- * // your code
- *   useEffect(() => {
- *      child.init()
- *     // your effect
- *     router.events.on("routeChangeStart", child.postRouteChange);
- *     return () => router.events.off("routeChangeStart", child.postRouteChange);
- *   }, []);
- *   return (
- *     <>
- *       <Component {...pageProps} />;
- *     </>
- *   );
- * }
- *
- * @example
- * // nextjs
- * // pages/demo.page.tsx
- *
- * export default function Demo() {
- *   const [count, setCount] = useState(0);
- *   const [isAuth, setAuth] = useState<boolean>(false);
- *   const [role, setRole] = useState(null);
- *
- *   useEffect(() => {
- *     child.auth((e) => {
- *       setAuth(e.isSuccess);
- *       setRole(e.data.role);
- *     });
- *   }, []);
- *
- *   return (
- *     <div>
- *       {isAuth ? (
- *         <>
- *           Your page
- *         </>
- *       ) : (
- *         <h1>No authN</h1>
- *       )}
- *     </div>
- *   );
- * }
- *
- */
 export class Child {
 	private _isEmbed: boolean = false
 	private _origin: string
 	private _appName: string
 
-	/**
-	 * @returns
-	 */
 	constructor() {}
+
 	installNextRouter(router: any) {
 		router.events.on('routeChangeComplete', path =>
 			this.sendMessage('route', path),
