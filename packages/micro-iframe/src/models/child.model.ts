@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-import router from 'next/router'
 
 export type AuthReturnType = { isSuccess: boolean; data: any }
 
@@ -23,13 +22,21 @@ export class Child {
 	 */
 	init() {
 		if (window.parent !== window) {
+			const origin = document.cookie
+				.split(';')
+				.reduce((p, c) => {
+					const cookie = c.split('=')
+					return Object.assign({}, p, {
+						[cookie[0]]: cookie[1],
+					})
+				}, {})['host-origin']
+			this._origin = origin
 			this._isEmbed = true
-			this._origin = document.location.ancestorOrigins[0]
-			this.sendMessage('route', window.location.pathname),
-				(this._appName = window.origin)
+			this._appName = window.origin
 			this.sendMessage('init', null, () => {
 				console.info('Connect success full')
 			})
+			this.sendMessage('route', window.location.pathname)
 		}
 	}
 

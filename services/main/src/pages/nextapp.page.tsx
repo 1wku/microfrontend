@@ -15,12 +15,12 @@ export function Neactapp() {
 			'http://app2.local.com:3000',
 			ref.current as HTMLIFrameElement,
 		)
-		return host.onRouteChange(
-			'http://app2.local.com:3000',
-			path => {
-				window.history.pushState({}, '', '/app2' + path)
-			},
-		)
+		// return host.onRouteChange(
+		// 	'http://app2.local.com:3000',
+		// 	path => {
+		// 		window.history.pushState({}, '', '/app2' + path)
+		// 	},
+		// )
 	}, [])
 	//!SECTION
 
