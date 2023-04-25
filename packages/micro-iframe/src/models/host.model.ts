@@ -9,9 +9,9 @@ export class Host {
 	private apps: string[] = []
 	private _isAuthReady: boolean = false
 	private _iframes: Record<string, HTMLIFrameElement> = {}
-	private _hostOrigin: string
 
 	constructor() {}
+
 	private get domain() {
 		const url = window.origin
 		const regex =
@@ -19,6 +19,7 @@ export class Host {
 		const matches = regex.exec(url)
 		return matches && matches[1]
 	}
+
 	/**
 	 * @param appName - id do người dùng đặt để phân biệt các app con
 	 */
@@ -62,6 +63,7 @@ export class Host {
 		window.addEventListener('message', handler)
 		return () => window.removeEventListener('message', handler)
 	}
+
 	onChildAuth(fn: () => AuthReturnType) {
 		if (!this._isAuthReady) {
 			this._isAuthReady = true
